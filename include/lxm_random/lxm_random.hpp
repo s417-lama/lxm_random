@@ -121,6 +121,14 @@ public:
     }
   }
 
+  l64x128mix_random split() {
+    uint64_t new_a  = (*this)();
+    uint64_t new_s  = (*this)();
+    uint64_t new_x0 = (*this)();
+    uint64_t new_x1 = (*this)();
+    return l64x128mix_random(new_a, new_s, new_x0, new_x1);
+  }
+
   constexpr static result_type min() { return 0; }
   constexpr static result_type max() { return std::numeric_limits<result_type>::max(); }
 

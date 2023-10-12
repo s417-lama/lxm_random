@@ -121,12 +121,16 @@ public:
     }
   }
 
-  l64x128mix_random split() {
-    uint64_t new_a  = (*this)();
+  l64x128mix_random split(result_type brine) {
+    uint64_t new_a  = brine << 1;
     uint64_t new_s  = (*this)();
     uint64_t new_x0 = (*this)();
     uint64_t new_x1 = (*this)();
     return l64x128mix_random(new_a, new_s, new_x0, new_x1);
+  }
+
+  l64x128mix_random split() {
+    return split((*this)());
   }
 
   constexpr static result_type min() { return 0; }

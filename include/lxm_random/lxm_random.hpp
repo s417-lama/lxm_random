@@ -126,7 +126,11 @@ public:
     uint64_t new_s  = (*this)();
     uint64_t new_x0 = (*this)();
     uint64_t new_x1 = (*this)();
-    return l64x128mix_random(new_a, new_s, new_x0, new_x1);
+
+    auto new_rng = l64x128mix_random(new_a, new_s, new_x0, new_x1);
+    // discard the first number because it is determined only with s and x0
+    new_rng.discard(1);
+    return new_rng;
   }
 
   l64x128mix_random split() {
@@ -172,7 +176,7 @@ private:
     if (x0_ == 0 && x1_ == 0) {
       uint64_t v = s_ + golden_ratio_64;
       x0_ = mix_stafford13(v);
-      x0_ = mix_stafford13(v + golden_ratio_64);
+      x1_ = mix_stafford13(v + golden_ratio_64);
     }
   }
 
